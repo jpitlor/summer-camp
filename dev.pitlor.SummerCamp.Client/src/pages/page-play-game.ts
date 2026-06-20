@@ -1,6 +1,6 @@
 import { customElement } from "lit/decorators.js";
 import { html } from "lit";
-import { StyledElement } from "./StyledElement.ts";
+import { StyledElement } from "../StyledElement.ts";
 
 @customElement("page-play-game")
 export class PagePlayGame extends StyledElement {

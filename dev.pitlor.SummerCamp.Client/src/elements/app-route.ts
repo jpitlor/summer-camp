@@ -16,6 +16,7 @@ export class AppRoute extends StyledElement {
   currentRoute!: string;
 
   render() {
+    console.log(this.currentRoute, this.route);
     if (this.currentRoute !== this.route) {
       return nothing;
     }

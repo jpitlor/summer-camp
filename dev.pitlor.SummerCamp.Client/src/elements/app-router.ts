@@ -16,7 +16,8 @@ export class AppRouter extends StyledElement {
   @state()
   route = "/";
 
-  onNavigate(event: { detail: string }) {
+  onNavigate(event: CustomEvent<string>) {
+    event.stopPropagation();
     this.route = event.detail;
   }
 

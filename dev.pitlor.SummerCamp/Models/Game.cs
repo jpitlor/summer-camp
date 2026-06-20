@@ -1,3 +1,3 @@
-namespace Summer_Camp.Models;
+namespace dev.pitlor.SummerCamp.Models;
 
 public record Game();

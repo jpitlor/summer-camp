@@ -29,6 +29,6 @@ export class Link extends StyledElement {
 
 declare global {
   interface HTMLElementEventMap {
-    navigate: { detail: string };
+    navigate: CustomEvent<string>;
   }
 }

@@ -1,6 +1,1 @@
-namespace dev.pitlor.SummerCamp.Client;
-
-public class Program
-{
-    
-}
+Console.WriteLine("Hello SummerCamp!");
