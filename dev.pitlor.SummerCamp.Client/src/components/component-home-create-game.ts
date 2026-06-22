@@ -1,24 +1,44 @@
 import { StyledElement } from "../StyledElement.ts";
-import { customElement } from "lit/decorators.js";
+import { customElement, state } from "lit/decorators.js";
 import { html } from "lit";
-
-const decks = [
-  "Water Sports",
-  "Outdoors",
-  "Cooking",
-  "Adventure",
-  "Arts & Crafts",
-  "Friendship",
-  "Games",
-];
+import { map } from "lit/directives/map.js";
+import { range } from "lit/directives/range.js";
+import type { DeckSelectedPayload } from "../elements/deck-choice.ts";
 
 @customElement("component-home-create-game")
 export class ComponentHomeCreateGame extends StyledElement {
+  @state()
+  selectedDecks = {} as Record<number, string>;
+
+  updateSelectedDecks(e: CustomEvent<DeckSelectedPayload>) {
+    this.selectedDecks = {
+      ...this.selectedDecks,
+      [e.detail.id]: e.detail.deck,
+    };
+  }
+
+  getDisabledDecks = (i: number) => {
+    return Object.values(this.selectedDecks).filter(
+      (x) => !this.selectedDecks[i] || x !== this.selectedDecks[i],
+    );
+  };
+
   render() {
     return html`
       <div class="h-full w-full overflow-y-auto">
-        <h1>Create Game</h1>
-        <form></form>
+        <h1 class="text-center text-2xl font-bold">Create Game</h1>
+        <form class="flex flex-col gap-4 mt-8">
+          ${map(
+            range(3),
+            (i) => html`
+              <deck-choice
+                .index=${i}
+                .disabledDecks=${this.getDisabledDecks(i)}
+                @deck-selected=${this.updateSelectedDecks}
+              ></deck-choice>
+            `,
+          )}
+        </form>
       </div>
     `;
   }
