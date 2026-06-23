@@ -46,14 +46,14 @@ export class DeckChoice extends StyledElement {
 
   render() {
     return html`
-      <div class="flex flex-col bg-white rounded p-2">
+      <form-block>
         <label for="deck-${this.index}" class="text-xs">
           Deck ${this.index + 1}
         </label>
         <select
           id="deck-${this.index}"
           @change=${this.onDeckSelected}
-          class="border-2 border-gray-600 mt-1 px-2 rounded"
+          class="mt-1 rounded"
         >
           <option value="">Select a deck</option>
           ${map(
@@ -74,14 +74,14 @@ export class DeckChoice extends StyledElement {
               type="file"
               accept="application/zip"
               id="custom-deck-${this.index}"
-              class="border-2 border-gray-600 mt-1 px-2 rounded"
+              class="border-2 border-dashed border-gray-300 bg-gray-100 mt-2 p-2 rounded"
               placeholder="Select custom deck"
               @change=${this.validateCustomDeck}
             />
           `,
           () => nothing,
         )}
-      </div>
+      </form-block>
     `;
   }
 }

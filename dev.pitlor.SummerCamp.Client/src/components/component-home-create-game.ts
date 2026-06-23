@@ -23,6 +23,11 @@ export class ComponentHomeCreateGame extends StyledElement {
     );
   };
 
+  createGame = (e: Event) => {
+    e.preventDefault();
+    return false;
+  };
+
   render() {
     return html`
       <div class="h-full w-full overflow-y-auto">
@@ -38,6 +43,13 @@ export class ComponentHomeCreateGame extends StyledElement {
               ></deck-choice>
             `,
           )}
+          <button
+            type="submit"
+            @click=${this.createGame}
+            class="bg-yellow-100 border-amber-500 border-2 text-amber-500 p-2 rounded cursor-pointer hover:bg-amber-500 active:bg-amber-500 hover:text-yellow-100 active:text-yellow-100"
+          >
+            Start Game
+          </button>
         </form>
       </div>
     `;

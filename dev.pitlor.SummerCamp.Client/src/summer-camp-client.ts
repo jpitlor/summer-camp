@@ -9,6 +9,7 @@ import "./elements/app-link.ts";
 import "./elements/app-route.ts";
 import "./elements/app-router.ts";
 import "./elements/deck-choice.ts";
+import "./elements/form-block.ts";
 import "./pages/page-home.ts";
 import "./pages/page-play-game.ts";
 
