@@ -13,14 +13,17 @@ export class PageHome extends StyledElement {
           class="py-12 px-12 rounded-xl shadow backdrop-blur-sm bg-[#FFFFFFAA]"
         >
           <app-router>
-            <app-route route="/x">
+            <app-route route="/">
               <component-home-menu></component-home-menu>
             </app-route>
-            <app-route route="/">
+            <app-route route="/create">
               <component-home-create-game></component-home-create-game>
             </app-route>
-            <app-route route="/list">
-              <component-home-game-list></component-home-game-list>
+            <app-route route="/join">
+              <component-home-join-game></component-home-join-game>
+            </app-route>
+            <app-route route="/wait">
+              <component-home-wait-to-start></component-home-wait-to-start>
             </app-route>
           </app-router>
         </div>

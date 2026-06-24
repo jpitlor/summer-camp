@@ -14,7 +14,7 @@ export class ComponentHomeMenu extends StyledElement {
             Start Game
           </div>
         </app-link>
-        <app-link href="/list">
+        <app-link href="/join">
           <div class="bg-white shadow-lg rounded py-2 px-4 text-xl">
             Join Game
           </div>
