@@ -26,19 +26,14 @@ export class SummerCampClient extends StyledElement {
 
   render() {
     return html`
-      <div class="h-full w-full overflow-y-auto">
-        <app-router>
-          <app-route route="/">
-            <page-home></page-home>
-          </app-route>
-          <app-route route="/wait">
-            <page-wait-for-game></page-wait-for-game>
-          </app-route>
-          <app-route route="/play">
-            <page-play-game></page-play-game>
-          </app-route>
-        </app-router>
-      </div>
+      <app-router>
+        <app-route route="/x">
+          <page-home></page-home>
+        </app-route>
+        <app-route route="/">
+          <page-play-game></page-play-game>
+        </app-route>
+      </app-router>
     `;
   }
 }
