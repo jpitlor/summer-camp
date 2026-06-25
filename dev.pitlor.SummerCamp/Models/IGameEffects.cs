@@ -1,11 +1,10 @@
 namespace dev.pitlor.SummerCamp.Models;
 
-// TODO: How can I incorporate when user choice is needed in this interface?
 public interface IGameEffects
 {
-    void moveOnTrack(int track, int steps);
+    ChoiceOrValue<int> moveOnTrack(ChoiceOrValue<int> track, int steps);
     void drawCards(DeckLocation source, int count);
-    void discardCards(int count);
+    ChoiceOrValue<int> discardCards(ChoiceOrValue<int> count);
     void getSnackBars(int count);
     void getEnergy(int count);
     void othersGetCards(List<string> players, DeckLocation destination, Card card);

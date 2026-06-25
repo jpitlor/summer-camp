@@ -1,13 +1,11 @@
+using dev.pitlor.SummerCamp.Hubs;
+
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddOpenApi();
-builder.Services.AddControllers();
+builder.Services.AddSignalR();
 
 var app = builder.Build();
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
-
+app.UseWebSockets();
 app.UseHttpsRedirection();
-app.MapControllers();
+app.MapHub<GamesHub>("/games");
+app.MapHub<PlayHub>("/play");
 app.Run();

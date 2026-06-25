@@ -7,5 +7,6 @@ public record Game(
     int smoresLeft,
     int scavengerHuntLeft,
     int freeTimeLeft,
+    List<Color> colorOrder,
     List<Player> players,
     List<BoardTile> boardTiles);

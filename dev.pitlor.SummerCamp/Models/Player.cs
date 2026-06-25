@@ -1,8 +1,9 @@
 namespace dev.pitlor.SummerCamp.Models;
 
 public record Player(
+    string connectionId,
     string name,
-    Color color,
+    Color? color,
     List<Card> drawPile,
     List<Card> hand,
     List<Card> discardPile,

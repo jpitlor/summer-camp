@@ -17,14 +17,4 @@
       </Content>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Decks\Adventure\" />
-      <Folder Include="Decks\ArtsAndCrafts\" />
-      <Folder Include="Decks\Cooking\" />
-      <Folder Include="Decks\Core\" />
-      <Folder Include="Decks\Friendship\" />
-      <Folder Include="Decks\Games\" />
-      <Folder Include="Decks\Outdoors\" />
-    </ItemGroup>
-
 </Project>

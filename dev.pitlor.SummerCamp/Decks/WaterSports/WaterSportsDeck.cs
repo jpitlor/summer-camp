@@ -1,6 +1,5 @@
+using dev.pitlor.SummerCamp.Models;
+
 namespace dev.pitlor.SummerCamp.Decks.WaterSports;
 
-public class WaterSportsDeck
-{
-    
-}
+public record WaterSportsDeck() : Deck(DeckName.WaterSports, []);
