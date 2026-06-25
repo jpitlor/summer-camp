@@ -2,10 +2,10 @@ using dev.pitlor.SummerCamp.Models;
 
 namespace dev.pitlor.SummerCamp.Decks.Core;
 
-public record Smores() : Card("S'mores", "Gain 2 energy", "", 2, 0)
+public record LightsOut(): Card("Lights Out", "No action", "", 0, 0)
 {
     public override void Play(IGameEffects gameEffects)
     {
-        gameEffects.getEnergy(2);
+        throw new NotImplementedException();
     }
 }

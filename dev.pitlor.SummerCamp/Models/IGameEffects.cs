@@ -2,7 +2,7 @@ namespace dev.pitlor.SummerCamp.Models;
 
 public interface IGameEffects
 {
-    ChoiceOrValue<int> moveOnTrack(ChoiceOrValue<int> track, int steps);
+    ChoiceOrValue<DeckName> moveOnTrack(ChoiceOrValue<DeckName> track, int steps);
     void drawCards(DeckLocation source, int count);
     ChoiceOrValue<int> discardCards(ChoiceOrValue<int> count);
     void getSnackBars(int count);

@@ -1,3 +1,4 @@
+using System.Collections;
 using dev.pitlor.SummerCamp.Decks.Adventure;
 using dev.pitlor.SummerCamp.Decks.ArtsAndCrafts;
 using dev.pitlor.SummerCamp.Decks.Cooking;
@@ -26,5 +27,12 @@ public static class DeckFactory
             DeckName.Custom => new CustomDeck(),
             _ => throw new ArgumentOutOfRangeException(nameof(deckName), deckName, null)
         };
+    }
+
+    public static List<Card> OfCards(params Tuple<int, Card>[] pairs)
+    {
+        return pairs
+            .SelectMany(pair => Enumerable.Repeat(pair.Item2, pair.Item1))
+            .ToList();
     }
 }
