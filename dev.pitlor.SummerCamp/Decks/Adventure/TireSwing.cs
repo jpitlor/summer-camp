@@ -1,4 +1,5 @@
 using dev.pitlor.SummerCamp.Models;
+using Path = dev.pitlor.SummerCamp.Models.Path;
 
 namespace dev.pitlor.SummerCamp.Decks.Adventure;
 
@@ -6,6 +7,6 @@ public record TireSwing() : Card("Tire swing", "Move your pawn forward 1 space o
 {
     public override void Play(IGameEffects gameEffects)
     {
-        gameEffects.moveOnTrack(ChoiceOrValue<DeckName>.Value(DeckName.Adventure), 1);
+        gameEffects.moveOnTrack(ChoiceOrValue<Path>.Value(Path.Deck(DeckName.Adventure)), 1);
     }
 }

@@ -1,4 +1,5 @@
 using dev.pitlor.SummerCamp.Models;
+using Path = dev.pitlor.SummerCamp.Models.Path;
 
 namespace dev.pitlor.SummerCamp.Decks.Adventure;
 
@@ -6,6 +7,6 @@ public record MountainBiking() : Card("Mountain biking", "Move your pawn forward
 {
     public override void Play(IGameEffects gameEffects)
     {
-        gameEffects.moveOnTrack(ChoiceOrValue<DeckName>.Value(DeckName.Adventure), 3);
+        gameEffects.moveOnTrack(ChoiceOrValue<Path>.Value(Path.Deck(DeckName.Adventure)), 3);
     }
 }
