@@ -8,10 +8,11 @@ public interface IGameEffects
     void getSnackBars(int count);
     ChoiceOrValue<int> discardSnackBars(ChoiceOrValue<int> count);
     void getEnergy(int count);
-    void othersGetCards(List<string> players, DeckLocation destination, Card card);
-    void othersDrawCards(List<string> players);
-    void othersDiscardCards(List<string> players);
-    void othersGetSnackBars(List<string> players);
+    void othersGetCards(ChoiceOrValue<List<string>> players, DeckLocation destination, Card card);
+    void othersGetCards(ChoiceOrValue<string> player, DeckLocation destination, Card card);
+    void othersDrawCards(int count);
+    void othersDiscardCards(int count);
+    void othersGetSnackBars(int count);
     void getCards(DeckLocation source, DeckLocation destination, int maxCost);
     void snackbarMultiplier(int multiplier);
 }
