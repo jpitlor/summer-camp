@@ -1,8 +1,8 @@
 namespace dev.pitlor.SummerCamp.Models;
 
-public record Deck(Path name, List<Card> cards)
+public record Deck(Path name, Card move1Card, List<Card> storeCards)
 {
-    protected Deck(DeckName name, List<Card> cards) : this(Path.Deck(name), cards)
+    protected Deck(DeckName name, Card move1Card, List<Card> storeCards) : this(Path.Deck(name), move1Card, storeCards)
     {
     }
 };
