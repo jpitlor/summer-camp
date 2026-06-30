@@ -35,7 +35,7 @@ public class GamesHub : Hub
             throw new ArgumentException("Game with id does not exist", nameof(id));
         }
 
-        if (game.players.Count >= 4)
+        if (game.Players.Count >= 4)
         {
             throw new ArgumentException("Game is full", nameof(id));
         }
@@ -52,7 +52,7 @@ public class GamesHub : Hub
             0,
             0,
             []);
-        game.players.Add(player);
+        game.Players.Add(player);
     }
 
     public Result StartGame(string id)

@@ -4,8 +4,8 @@ namespace dev.pitlor.SummerCamp.Decks.Outdoors;
 
 public record PocketKnife() : Card("Pocket knife", "Draw 3 cards", "", 8, 1)
 {
-    public override void Play(IGameEffects gameEffects)
+    public override void Play(IGameEffects gameEffects, Game game, Player player)
     {
-        gameEffects.drawCards(DeckLocation.DrawPile, 3);
+        gameEffects.DrawCards(DeckLocation.DrawPile, 3);
     }
 };

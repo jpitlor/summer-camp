@@ -5,7 +5,7 @@ namespace dev.pitlor.SummerCamp.Decks.Cooking;
 
 public record PizzaMaking() : Card("Pizza making", "Move your pawn forward 2 spaces on the cooking path", "", 8, 2)
 {
-    public override void Play(IGameEffects gameEffects)
+    public override void Play(IGameEffects gameEffects, Game game, Player player)
     {
         gameEffects.moveOnTrack(ChoiceOrValue<Path>.Value(Path.Deck(DeckName.Cooking)), 3);
     }

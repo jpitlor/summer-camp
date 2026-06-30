@@ -5,7 +5,7 @@ namespace dev.pitlor.SummerCamp.Decks.Cooking;
 
 public record KitchenChores() : Card("Kitchen chores", "Move your pawn forward 1 space on the cooking path", "", 0, 0)
 {
-    public override void Play(IGameEffects gameEffects)
+    public override void Play(IGameEffects gameEffects, Game game, Player player)
     {
         gameEffects.moveOnTrack(ChoiceOrValue<Path>.Value(Path.Deck(DeckName.Cooking)), 1);
     }

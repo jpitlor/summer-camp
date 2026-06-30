@@ -1,3 +1,3 @@
 namespace dev.pitlor.SummerCamp.Models;
 
-public record Badge(string description, int points);
+public record Badge(string Description, int Points);

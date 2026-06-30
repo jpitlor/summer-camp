@@ -2,17 +2,17 @@ namespace dev.pitlor.SummerCamp.Models;
 
 public interface IGameEffects
 {
-    ChoiceOrValue<Path> moveOnTrack(ChoiceOrValue<Path> track, int steps);
-    void drawCards(DeckLocation source, int count);
-    ChoiceOrValue<int> discardCards(ChoiceOrValue<int> count);
-    void getSnackBars(int count);
-    ChoiceOrValue<int> discardSnackBars(ChoiceOrValue<int> count);
-    void getEnergy(int count);
-    void othersGetCards(ChoiceOrValue<List<string>> players, DeckLocation destination, Card card);
-    void othersGetCards(ChoiceOrValue<string> player, DeckLocation destination, Card card);
-    void othersDrawCards(int count);
-    void othersDiscardCards(int count);
-    void othersGetSnackBars(int count);
-    void getCards(DeckLocation source, DeckLocation destination, int maxCost);
-    void snackbarMultiplier(int multiplier);
+    MoveResult moveOnTrack(ChoiceOrValue<Path> track, int steps);
+    void DrawCards(DeckLocation source, int count);
+    ChoiceOrValue<int> DiscardCards(ChoiceOrValue<int> count);
+    void GetSnackBars(int count);
+    ChoiceOrValue<int> DiscardSnackBars(ChoiceOrValue<int> count);
+    void GetEnergy(int count);
+    void OthersGetCards(ChoiceOrValue<List<string>> players, DeckLocation destination, Card card);
+    void OthersGetCards(ChoiceOrValue<string> player, DeckLocation destination, Card card);
+    void OthersDrawCards(int count);
+    void OthersDiscardCards(int count);
+    void OthersGetSnackBars(int count);
+    void GetCards(DeckLocation source, DeckLocation destination, int maxCost);
+    void SnackbarMultiplier(int multiplier);
 }

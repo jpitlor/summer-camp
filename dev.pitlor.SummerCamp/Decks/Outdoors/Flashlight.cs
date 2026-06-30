@@ -4,8 +4,8 @@ namespace dev.pitlor.SummerCamp.Decks.Outdoors;
 
 public record Flashlight() : Card("Flashlight", "Draw 2 cards", "", 5, 1)
 {
-    public override void Play(IGameEffects gameEffects)
+    public override void Play(IGameEffects gameEffects, Game game, Player player)
     {
-        gameEffects.drawCards(DeckLocation.DrawPile, 2);
+        gameEffects.DrawCards(DeckLocation.DrawPile, 2);
     }
 }

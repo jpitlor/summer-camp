@@ -1,3 +1,3 @@
 namespace dev.pitlor.SummerCamp.Models;
 
-public record BoardTile(int id, List<Tuple<int, Effect>> effects);
+public record BoardTile(int Id, List<Tuple<int, Effect>> Effects);

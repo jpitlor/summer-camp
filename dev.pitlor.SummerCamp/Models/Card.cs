@@ -1,11 +1,11 @@
 namespace dev.pitlor.SummerCamp.Models;
 
-public abstract record Card(string name, string description, string base64Image, int cost, int points)
+public abstract record Card(string Name, string Description, string Base64Image, int Cost, int Points)
 {
-    public abstract void Play(IGameEffects gameEffects);
+    public abstract void Play(IGameEffects gameEffects, Game game, Player player);
 
     public void Discard(IGameEffects gameEffects)
     {
-        gameEffects.getEnergy(1);
+        gameEffects.GetEnergy(1);
     }
 }

@@ -1,3 +1,3 @@
 namespace dev.pitlor.SummerCamp.Decks.Custom;
 
-public record CustomDeckConfig(string name);
+public record CustomDeckConfig(string Name);

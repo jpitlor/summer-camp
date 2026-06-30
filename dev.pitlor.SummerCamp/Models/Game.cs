@@ -1,12 +1,12 @@
 namespace dev.pitlor.SummerCamp.Models;
 
 public record Game(
-    Deck deck1,
-    Deck deck2,
-    Deck deck3,
-    int smoresLeft,
-    int scavengerHuntLeft,
-    int freeTimeLeft,
-    List<Color> colorOrder,
-    List<Player> players,
-    List<BoardTile> boardTiles);
+    Deck Deck1,
+    Deck Deck2,
+    Deck Deck3,
+    int SmoresLeft,
+    int ScavengerHuntLeft,
+    int FreeTimeLeft,
+    List<Color> ColorOrder,
+    List<Player> Players,
+    List<BoardTile> BoardTiles);

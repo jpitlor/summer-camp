@@ -4,9 +4,9 @@ namespace dev.pitlor.SummerCamp.Decks.Friendship;
 
 public record Singalong() : Card("Sing-along", "Draw 2 cards. All other players draw 1.", "", 3, 1)
 {
-    public override void Play(IGameEffects gameEffects)
+    public override void Play(IGameEffects gameEffects, Game game, Player player)
     {
-        gameEffects.drawCards(DeckLocation.DrawPile, 2);
-        gameEffects.othersDrawCards(1);
+        gameEffects.DrawCards(DeckLocation.DrawPile, 2);
+        gameEffects.OthersDrawCards(1);
     }
 }

@@ -1,14 +1,14 @@
 namespace dev.pitlor.SummerCamp.Models;
 
 public record Player(
-    string connectionId,
-    string name,
-    Color? color,
-    List<Card> drawPile,
-    List<Card> hand,
-    List<Card> discardPile,
-    int snackbars,
-    int path1Progress,
-    int path2Progress,
-    int path3Progress,
-    List<Badge> badges);
+    string ConnectionId,
+    string Name,
+    Color? Color,
+    List<Card> DrawPile,
+    List<Card> Hand,
+    List<Card> DiscardPile,
+    int Snackbars,
+    int Path1Progress,
+    int Path2Progress,
+    int Path3Progress,
+    List<Badge> Badges);

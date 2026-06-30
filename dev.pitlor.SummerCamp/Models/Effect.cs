@@ -4,5 +4,6 @@ public enum Effect
 {
     DrawCard,
     GetSnackBar,
-    MoveOne
+    MoveOne,
+    Bridge
 }
