@@ -7,7 +7,7 @@ public record Fishing() : Card("Fishing", "Move 1 space on any path. If you land
 {
     public override void Play(IGameEffects gameEffects, Game game, Player player)
     {
-        var result = gameEffects.moveOnTrack(ChoiceOrValue<Path>.Choice(), 1);
+        var result = gameEffects.MoveOnTrack(ChoiceOrValue<Path>.Choice(), 1);
         if (result.Effect == Effect.Bridge)
         {
             gameEffects.DrawCards(DeckLocation.DrawPile, 1);

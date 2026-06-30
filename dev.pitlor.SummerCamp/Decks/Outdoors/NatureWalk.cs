@@ -7,6 +7,6 @@ public record NatureWalk() : Card("Nature walk", "Move 1 space on the outdoors p
 {
     public override void Play(IGameEffects gameEffects, Game game, Player player)
     {
-        gameEffects.moveOnTrack(ChoiceOrValue<Path>.Value(Path.Deck(DeckName.Outdoors)), 1);
+        gameEffects.MoveOnTrack(ChoiceOrValue<Path>.Value(Path.Deck(DeckName.Outdoors)), 1);
     }
 }

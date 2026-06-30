@@ -7,6 +7,6 @@ public record KitchenChores() : Card("Kitchen chores", "Move your pawn forward 1
 {
     public override void Play(IGameEffects gameEffects, Game game, Player player)
     {
-        gameEffects.moveOnTrack(ChoiceOrValue<Path>.Value(Path.Deck(DeckName.Cooking)), 1);
+        gameEffects.MoveOnTrack(ChoiceOrValue<Path>.Value(Path.Deck(DeckName.Cooking)), 1);
     }
 };

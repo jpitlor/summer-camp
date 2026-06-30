@@ -7,6 +7,6 @@ public record TireSwing() : Card("Tire swing", "Move your pawn forward 1 space o
 {
     public override void Play(IGameEffects gameEffects, Game game, Player player)
     {
-        gameEffects.moveOnTrack(ChoiceOrValue<Path>.Value(Path.Deck(DeckName.Adventure)), 1);
+        gameEffects.MoveOnTrack(ChoiceOrValue<Path>.Value(Path.Deck(DeckName.Adventure)), 1);
     }
 }

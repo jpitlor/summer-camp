@@ -7,6 +7,6 @@ public record FireMaking() : Card("Fire making", "Move your pawn forward 2 space
 {
     public override void Play(IGameEffects gameEffects, Game game, Player player)
     {
-        gameEffects.moveOnTrack(ChoiceOrValue<Path>.Value(Path.Deck(DeckName.Cooking)), 2);
+        gameEffects.MoveOnTrack(ChoiceOrValue<Path>.Value(Path.Deck(DeckName.Cooking)), 2);
     }
 };

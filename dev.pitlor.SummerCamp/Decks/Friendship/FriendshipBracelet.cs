@@ -8,6 +8,6 @@ public record FriendshipBracelet() : Card("Friendship bracelet",
     public override void Play(IGameEffects gameEffects, Game game, Player player)
     {
         gameEffects.DrawCards(DeckLocation.DrawPile, 3);
-        gameEffects.OthersGetCards(ChoiceOrValue<string>.Choice(), DeckLocation.DiscardPile, new FriendshipBracelet());
+        gameEffects.OtherGetsCard(ChoiceOrValue<string>.Choice(), DeckLocation.DiscardPile, new FriendshipBracelet());
     }
 }

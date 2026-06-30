@@ -6,7 +6,7 @@ public record ScavengerHunt() : Card("Scavenger Hunt", "Discard 1-3 cards, then 
 {
     public override void Play(IGameEffects gameEffects, Game game, Player player)
     {
-        var discarded = gameEffects.DiscardCards(ChoiceOrValue<int>.Choice());
+        var discarded = gameEffects.DiscardCards(ChoiceOrValue<int>.Choice([1, 2, 3]));
         gameEffects.DrawCards(DeckLocation.DrawPile, discarded.InternalValue);
     }
 }

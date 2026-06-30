@@ -7,6 +7,6 @@ public record WaterBlob() : Card("Water blob", "Move 2 spaces on any path", "", 
 {
     public override void Play(IGameEffects gameEffects, Game game, Player player)
     {
-        gameEffects.moveOnTrack(ChoiceOrValue<Path>.Choice(), 2);
+        gameEffects.MoveOnTrack(ChoiceOrValue<Path>.Choice(), 2);
     }
 }

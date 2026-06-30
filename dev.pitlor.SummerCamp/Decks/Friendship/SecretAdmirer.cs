@@ -8,6 +8,6 @@ public record SecretAdmirer() : Card("Secret admirer",
     public override void Play(IGameEffects gameEffects, Game game, Player player)
     {
         gameEffects.GetEnergy(5);
-        gameEffects.OthersGetCards(ChoiceOrValue<string>.Choice(), DeckLocation.DiscardPile, new SecretAdmirer());
+        gameEffects.OtherGetsCard(ChoiceOrValue<string>.Choice(), DeckLocation.DiscardPile, new SecretAdmirer());
     }
 }

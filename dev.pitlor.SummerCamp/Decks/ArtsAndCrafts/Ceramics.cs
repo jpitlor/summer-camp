@@ -7,6 +7,6 @@ public record Ceramics() : Card("Ceramics", "Move your pawn forward 2 spaces on 
 {
     public override void Play(IGameEffects gameEffects, Game game, Player player)
     {
-        gameEffects.moveOnTrack(ChoiceOrValue<Path>.Value(Path.Deck(DeckName.ArtsAndCrafts)), 2);
+        gameEffects.MoveOnTrack(ChoiceOrValue<Path>.Value(Path.Deck(DeckName.ArtsAndCrafts)), 2);
     }
 }

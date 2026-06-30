@@ -3,10 +3,10 @@ using Path = dev.pitlor.SummerCamp.Models.Path;
 
 namespace dev.pitlor.SummerCamp.Decks.Adventure;
 
-public record MountainBiking() : Card("Mountain biking", "Move your pawn forward 3 spaces on the adventure path", "", 0, 0)
+public record MountainBiking() : Card("Mountain biking", "Move your pawn forward 3 spaces on the adventure path", "", 8, 2)
 {
     public override void Play(IGameEffects gameEffects, Game game, Player player)
     {
-        gameEffects.moveOnTrack(ChoiceOrValue<Path>.Value(Path.Deck(DeckName.Adventure)), 3);
+        gameEffects.MoveOnTrack(ChoiceOrValue<Path>.Value(Path.Deck(DeckName.Adventure)), 3);
     }
 }

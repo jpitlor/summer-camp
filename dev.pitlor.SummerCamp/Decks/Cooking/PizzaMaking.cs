@@ -7,6 +7,6 @@ public record PizzaMaking() : Card("Pizza making", "Move your pawn forward 2 spa
 {
     public override void Play(IGameEffects gameEffects, Game game, Player player)
     {
-        gameEffects.moveOnTrack(ChoiceOrValue<Path>.Value(Path.Deck(DeckName.Cooking)), 3);
+        gameEffects.MoveOnTrack(ChoiceOrValue<Path>.Value(Path.Deck(DeckName.Cooking)), 3);
     }
 };

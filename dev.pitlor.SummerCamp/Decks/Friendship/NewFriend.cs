@@ -7,6 +7,6 @@ public record NewFriend() : Card("New friend", "Move your pawn forward 1 space o
 {
     public override void Play(IGameEffects gameEffects, Game game, Player player)
     {
-        gameEffects.moveOnTrack(ChoiceOrValue<Path>.Value(Path.Deck(DeckName.Friendship)), 1);
+        gameEffects.MoveOnTrack(ChoiceOrValue<Path>.Value(Path.Deck(DeckName.Friendship)), 1);
     }
 }

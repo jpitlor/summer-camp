@@ -7,7 +7,7 @@ public record MacaroniSculpture() : Card("Macaroni sculpture",
 {
     public override void Play(IGameEffects gameEffects, Game game, Player player)
     {
-        var discardCards = gameEffects.DiscardCards(ChoiceOrValue<int>.Choice());
+        var discardCards = gameEffects.DiscardCards(ChoiceOrValue<int>.Choice([0, 1, 2]));
         gameEffects.GetSnackBars(discardCards.InternalValue * 3);
     }
 }

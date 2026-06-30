@@ -8,10 +8,10 @@ public record GodsEye() : Card("God's eye",
 {
     public override void Play(IGameEffects gameEffects, Game game, Player player)
     {
-        var discardSnackBars = gameEffects.DiscardSnackBars(ChoiceOrValue<int>.Choice());
+        var discardSnackBars = gameEffects.DiscardSnackBars(ChoiceOrValue<int>.Choice([0, 2, 4, 6]));
         for (var i = 0; i < discardSnackBars.InternalValue; i++)
         {
-            gameEffects.moveOnTrack(ChoiceOrValue<Path>.Choice(), 1);
+            gameEffects.MoveOnTrack(ChoiceOrValue<Path>.Choice(), 1);
         }
     }
 }

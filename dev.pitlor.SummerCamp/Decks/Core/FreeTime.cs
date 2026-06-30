@@ -7,6 +7,6 @@ public record FreeTime() : Card("Free Time", "Move 1 space in any path", "", 4, 
 {
     public override void Play(IGameEffects gameEffects, Game game, Player player)
     {
-        gameEffects.moveOnTrack(ChoiceOrValue<Path>.Choice(), 1);
+        gameEffects.MoveOnTrack(ChoiceOrValue<Path>.Choice(), 1);
     }
 }

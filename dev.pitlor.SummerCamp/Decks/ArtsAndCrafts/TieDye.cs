@@ -8,10 +8,10 @@ public record TieDye() : Card("Tie dye",
 {
     public override void Play(IGameEffects gameEffects, Game game, Player player)
     {
-        var discardCards = gameEffects.DiscardCards(ChoiceOrValue<int>.Choice());
+        var discardCards = gameEffects.DiscardCards(ChoiceOrValue<int>.Choice([0, 1, 2]));
         for (var i = 0; i < discardCards.InternalValue; i++)
         {
-            gameEffects.moveOnTrack(ChoiceOrValue<Path>.Choice(), 1);
+            gameEffects.MoveOnTrack(ChoiceOrValue<Path>.Choice(), 1);
         }
     }
 }
