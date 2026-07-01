@@ -24,7 +24,7 @@ public static class DeckFactory
             DeckName.ArtsAndCrafts => new ArtsAndCraftsDeck(),
             DeckName.Friendship => new FriendshipDeck(),
             DeckName.Games => new GamesDeck(),
-            DeckName.Custom => new CustomDeck(),
+            DeckName.Custom => throw new ArgumentOutOfRangeException(nameof(deckName), deckName, "Custom decks not supported in this method"),
             _ => throw new ArgumentOutOfRangeException(nameof(deckName), deckName, null)
         };
     }
