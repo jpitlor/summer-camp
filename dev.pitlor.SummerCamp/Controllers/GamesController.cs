@@ -34,16 +34,17 @@ public class GamesController(GamesService gamesService) : ControllerBase
         }
 
         var storeCards = config.StoreCards
-            .Select(x => new Tuple<int, Card>(x.Count, x.Card))
+            .Select(x => new Tuple<int, Card>(
+                x.Count,
+                CustomCard.Create(x.Card, ImageToBase64(zip))))
             .ToArray();
         var deck = new Deck(Path.Custom(config.Name), config.Move1Card, DeckFactory.OfCards(storeCards));
         gamesService.AddCustomDeck(config.Name, deck);
         
-        
         return Ok();
     }
 
-    private Func<string, string> ImageToBase64(ZipArchive zipArchive) => (string path) =>
+    private static Func<string, string> ImageToBase64(ZipArchive zipArchive) => path =>
     {
         var image = zipArchive.GetEntry(path);
         if (image == null)

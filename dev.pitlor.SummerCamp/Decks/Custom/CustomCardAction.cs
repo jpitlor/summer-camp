@@ -1,6 +1,3 @@
 ﻿namespace dev.pitlor.SummerCamp.Decks.Custom;
 
-public static class CustomCardFactory
-{
-    
-}
+public record CustomCardAction();

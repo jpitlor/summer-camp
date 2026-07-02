@@ -2,4 +2,4 @@
 
 namespace dev.pitlor.SummerCamp.Decks.Custom;
 
-public record CardAndNumber(CustomCard Card, int Count);
+public record CardAndNumber(CustomCardConfig Card, int Count);
