@@ -12,6 +12,8 @@ import "./elements/app-route.ts";
 import "./elements/app-router.ts";
 import "./elements/deck-choice.ts";
 import "./elements/form-block.ts";
+import "./elements/singalr-games-client.ts";
+import "./elements/singalr-play-client.ts";
 import "./pages/page-home.ts";
 import "./pages/page-play-game.ts";
 
@@ -27,10 +29,10 @@ export class SummerCampClient extends StyledElement {
   render() {
     return html`
       <app-router>
-        <app-route route="/x">
+        <app-route route="/">
           <page-home></page-home>
         </app-route>
-        <app-route route="/">
+        <app-route route="/play">
           <page-play-game></page-play-game>
         </app-route>
       </app-router>

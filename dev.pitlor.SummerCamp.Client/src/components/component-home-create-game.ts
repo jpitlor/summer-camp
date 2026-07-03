@@ -25,6 +25,10 @@ export class ComponentHomeCreateGame extends StyledElement {
 
   createGame = (e: Event) => {
     e.preventDefault();
+    const payload = {
+      decks: Object.keys(this.selectedDecks).map((d) => ({ name: d })),
+    } as CreateGamePayload;
+    this.dispatchEvent(new CustomEvent("createGame", { detail: payload }));
     return false;
   };
 
@@ -53,5 +57,26 @@ export class ComponentHomeCreateGame extends StyledElement {
         </form>
       </div>
     `;
+  }
+}
+
+export interface CreateGamePayload {
+  decks: {
+    name:
+      | "WaterSports"
+      | "Outdoors"
+      | "Cooking"
+      | "Adventure"
+      | "ArtsAndCrafts"
+      | "Friendship"
+      | "Games"
+      | "Custom";
+    customDeckName?: string;
+  }[];
+}
+
+declare global {
+  interface HTMLElementEventMap {
+    createGame: CustomEvent<CreateGamePayload>;
   }
 }

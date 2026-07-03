@@ -1,6 +1,6 @@
 namespace dev.pitlor.SummerCamp.Models;
 
-public record Game(
+public record struct Game(
     Deck Deck1,
     Deck Deck2,
     Deck Deck3,
@@ -8,5 +8,6 @@ public record Game(
     int ScavengerHuntLeft,
     int FreeTimeLeft,
     List<Color> ColorOrder,
-    List<Player> Players,
-    List<BoardTile> BoardTiles);
+    Dictionary<string, Player> Players,
+    List<BoardTile> BoardTiles,
+    string AdminPlayerId);

@@ -1,7 +1,7 @@
 namespace dev.pitlor.SummerCamp.Models;
 
-public record Player(
-    string ConnectionId,
+public record struct Player(
+    string? ConnectionId,
     string Name,
     Color? Color,
     List<Card> DrawPile,
