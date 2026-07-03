@@ -35,3 +35,8 @@ export class ComponentHomeJoinGame extends StyledElement {
     `;
   }
 }
+
+export interface JoinGamePayload {
+  gameId: string;
+  playerId: string;
+}

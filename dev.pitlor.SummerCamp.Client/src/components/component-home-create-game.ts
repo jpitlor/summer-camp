@@ -4,6 +4,7 @@ import { html } from "lit";
 import { map } from "lit/directives/map.js";
 import { range } from "lit/directives/range.js";
 import type { DeckSelectedPayload } from "../elements/deck-choice.ts";
+import type { Path } from "../models/path.ts";
 
 @customElement("component-home-create-game")
 export class ComponentHomeCreateGame extends StyledElement {
@@ -61,18 +62,9 @@ export class ComponentHomeCreateGame extends StyledElement {
 }
 
 export interface CreateGamePayload {
-  decks: {
-    name:
-      | "WaterSports"
-      | "Outdoors"
-      | "Cooking"
-      | "Adventure"
-      | "ArtsAndCrafts"
-      | "Friendship"
-      | "Games"
-      | "Custom";
-    customDeckName?: string;
-  }[];
+  gameId: string;
+  playerId: string;
+  paths: Path[];
 }
 
 declare global {

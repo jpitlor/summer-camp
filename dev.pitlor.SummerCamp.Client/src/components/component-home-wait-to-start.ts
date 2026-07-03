@@ -2,6 +2,7 @@ import { StyledElement } from "../StyledElement.ts";
 import { customElement } from "lit/decorators.js";
 import { html } from "lit";
 import { map } from "lit/directives/map.js";
+import type { Color } from "../models/color.ts";
 
 const colors = [
   { name: "red", className: "bg-red-500", borderClassName: "border-red-900" },
@@ -77,4 +78,16 @@ export class ComponentHomeWaitToStart extends StyledElement {
       </div>
     `;
   }
+}
+
+export interface UpdatePlayerPayload {
+  gameId: string;
+  playerId: string;
+  name: string;
+  color: Color;
+}
+
+export interface StartGamePayload {
+  gameId: string;
+  playerId: string;
 }
