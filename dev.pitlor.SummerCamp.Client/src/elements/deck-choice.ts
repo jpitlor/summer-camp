@@ -3,17 +3,18 @@ import { StyledElement } from "../StyledElement.ts";
 import { html, nothing } from "lit";
 import { map } from "lit/directives/map.js";
 import { when } from "lit/directives/when.js";
+import type { DeckName } from "../models/deck-name.ts";
 
 const decks = [
-  "Water Sports",
-  "Outdoors",
-  "Cooking",
-  "Adventure",
-  "Arts & Crafts",
-  "Friendship",
-  "Games",
-  "Custom",
-];
+  { value: "WaterSports", label: "Water Sports" },
+  { value: "Outdoors", label: "Outdoors" },
+  { value: "Cooking", label: "Cooking" },
+  { value: "Adventure", label: "Adventure" },
+  { value: "ArtsAndCrafts", label: "Arts & Crafts" },
+  { value: "Friendship", label: "Friendship" },
+  { value: "Games", label: "Games" },
+  { value: "Custom", label: "Custom" },
+] as { value: DeckName; label: string }[];
 
 @customElement("deck-choice")
 export class DeckChoice extends StyledElement {
@@ -31,15 +32,13 @@ export class DeckChoice extends StyledElement {
     this.dispatchEvent(
       new CustomEvent("deck-selected", {
         detail: {
-          deck: decks[selectedIndex - 1],
+          deck: decks[selectedIndex - 1].value,
           id: this.index,
         } as DeckSelectedPayload,
       }),
     );
 
-    if (decks[selectedIndex - 1] === "Custom") {
-      this.isCustomDeck = true;
-    }
+    this.isCustomDeck = decks[selectedIndex - 1].value === "Custom";
   };
 
   validateCustomDeck = () => {};
@@ -60,10 +59,11 @@ export class DeckChoice extends StyledElement {
             decks,
             (deck) =>
               html`<option
-                id=${deck}
-                .disabled=${this.disabledDecks.includes(deck)}
+                id=${deck.value}
+                value=${deck.value}
+                .disabled=${this.disabledDecks.includes(deck.value)}
               >
-                ${deck}
+                ${deck.label}
               </option>`,
           )}
         </select>
@@ -88,7 +88,7 @@ export class DeckChoice extends StyledElement {
 
 export interface DeckSelectedPayload {
   id: number;
-  deck: string;
+  deck: DeckName;
 }
 
 declare global {

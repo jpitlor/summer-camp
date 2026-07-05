@@ -5,11 +5,18 @@ import { map } from "lit/directives/map.js";
 import { range } from "lit/directives/range.js";
 import type { DeckSelectedPayload } from "../elements/deck-choice.ts";
 import type { Path } from "../models/path.ts";
+import {
+  adjectives,
+  animals,
+  colors,
+  uniqueNamesGenerator,
+} from "unique-names-generator";
+import type { DeckName } from "../models/deck-name.ts";
 
 @customElement("component-home-create-game")
 export class ComponentHomeCreateGame extends StyledElement {
   @state()
-  selectedDecks = {} as Record<number, string>;
+  selectedDecks = {} as Record<number, DeckName>;
 
   updateSelectedDecks(e: CustomEvent<DeckSelectedPayload>) {
     this.selectedDecks = {
@@ -20,15 +27,29 @@ export class ComponentHomeCreateGame extends StyledElement {
 
   getDisabledDecks = (i: number) => {
     return Object.values(this.selectedDecks).filter(
-      (x) => !this.selectedDecks[i] || x !== this.selectedDecks[i],
+      (x) =>
+        (!this.selectedDecks[i] || x !== this.selectedDecks[i]) &&
+        x != "Custom",
     );
   };
 
   createGame = (e: Event) => {
     e.preventDefault();
+    const gameIdConfig = {
+      dictionaries: [adjectives, colors, animals],
+    };
+
+    const gameId = uniqueNamesGenerator(gameIdConfig);
     const payload = {
-      decks: Object.keys(this.selectedDecks).map((d) => ({ name: d })),
+      playerId: localStorage.getItem("playerId"),
+      gameId,
+      paths: Object.values(this.selectedDecks).map((d) => ({
+        deckName: d,
+        customName: "",
+        isCustom: d == "Custom",
+      })),
     } as CreateGamePayload;
+    localStorage.setItem("gameId", gameId);
     this.dispatchEvent(new CustomEvent("createGame", { detail: payload }));
     return false;
   };

@@ -3,13 +3,17 @@ import { customElement, query } from "lit/decorators.js";
 import { StyledElement } from "../StyledElement.ts";
 import type { SignalrGamesClient } from "../elements/singalr-games-client.ts";
 import type { CreateGamePayload } from "../components/component-home-create-game.ts";
+import type { AppRouter } from "../elements/app-router.ts";
 
 @customElement("page-home")
 export class PageHome extends StyledElement {
   @query("signalr-games-client") signalrGamesClient!: SignalrGamesClient;
 
+  @query("app-router") appRouter!: AppRouter;
+
   handleCreateGame = (e: CustomEvent<CreateGamePayload>) => {
     this.signalrGamesClient.createGame(e.detail);
+    this.appRouter.navigate("/wait");
   };
 
   render() {

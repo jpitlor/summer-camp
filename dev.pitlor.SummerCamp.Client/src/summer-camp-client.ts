@@ -21,8 +21,8 @@ import "./pages/page-play-game.ts";
 export class SummerCampClient extends StyledElement {
   connectedCallback() {
     super.connectedCallback();
-    if (!localStorage.getItem("clientId")) {
-      localStorage.setItem("clientId", uuid());
+    if (!localStorage.getItem("playerId")) {
+      localStorage.setItem("playerId", uuid());
     }
   }
 

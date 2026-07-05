@@ -8,9 +8,12 @@ export class SignalrPlayClient extends StyledElement {
   @state()
   connection?: HubConnection;
 
-  connectedCallback() {
+  async connectedCallback() {
     super.connectedCallback();
-    this.connection = new HubConnectionBuilder().withUrl("/play").build();
+    this.connection = new HubConnectionBuilder()
+      .withUrl("http://localhost:5226/play")
+      .build();
+    await this.connection.start();
   }
 
   render() {

@@ -15,10 +15,13 @@ export class SignalrGamesClient extends StyledElement {
   @state()
   connection?: HubConnection;
 
-  connectedCallback() {
+  async connectedCallback() {
     super.connectedCallback();
-    this.connection = new HubConnectionBuilder().withUrl("/games").build();
+    this.connection = new HubConnectionBuilder()
+      .withUrl("http://localhost:5226/games")
+      .build();
     this.connection.on("GameUpdated", this.onGameUpdated);
+    await this.connection.start();
   }
 
   createGame(payload: CreateGamePayload) {

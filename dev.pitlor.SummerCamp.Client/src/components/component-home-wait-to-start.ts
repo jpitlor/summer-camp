@@ -1,5 +1,5 @@
 import { StyledElement } from "../StyledElement.ts";
-import { customElement } from "lit/decorators.js";
+import { customElement, query, queryAll, property } from "lit/decorators.js";
 import { html } from "lit";
 import { map } from "lit/directives/map.js";
 import type { Color } from "../models/color.ts";
@@ -25,9 +25,33 @@ const colors = [
 
 @customElement("component-home-wait-to-start")
 export class ComponentHomeWaitToStart extends StyledElement {
+  @property() gameId!: string;
+
+  @query("[name=name]") nameInput!: HTMLInputElement;
+
+  @queryAll("[name=color") colorInputs!: NodeListOf<HTMLInputElement>;
+
   startGame = (e: Event) => {
     e.preventDefault();
+    const payload = {
+      gameId: this.gameId,
+      playerId: localStorage.getItem("playerId"),
+    } as StartGamePayload;
+    this.dispatchEvent(new CustomEvent("startGame", { detail: payload }));
     return false;
+  };
+
+  updatePlayer = () => {
+    const selectedColor = Array.from(this.colorInputs.values()).find(
+      (i) => i.checked,
+    )!.name;
+    const payload = {
+      name: this.nameInput.value,
+      color: selectedColor,
+      playerId: localStorage.getItem("playerId"),
+      gameId: this.gameId,
+    } as UpdatePlayerPayload;
+    this.dispatchEvent(new CustomEvent("updatePlayer", { detail: payload }));
   };
 
   render() {
@@ -36,6 +60,7 @@ export class ComponentHomeWaitToStart extends StyledElement {
         <h1 class="text-center text-2xl font-bold">
           Waiting For Game To Start
         </h1>
+        <p>Game ID: ${localStorage.getItem("gameId")}</p>
         <form class="flex flex-col gap-4 mt-8">
           <form-block>
             <label class="text-xs" for="name">Name</label>
@@ -44,6 +69,7 @@ export class ComponentHomeWaitToStart extends StyledElement {
               type="text"
               name="name"
               class="border-2 border-gray-300 rounded"
+              @blur=${this.updatePlayer}
             />
           </form-block>
           <form-block>
@@ -59,6 +85,7 @@ export class ComponentHomeWaitToStart extends StyledElement {
                       .id=${`color-${color.name}`}
                       .value=${color.name}
                       class="peer hidden"
+                      @click=${this.updatePlayer}
                     />
                     <label .htmlFor=${`color-${color.name}`} .className=${`peer-checked:border-4 ${color.borderClassName} inline-block w-12 h-12 rounded ${color.className}`}
                     </label>
@@ -90,4 +117,11 @@ export interface UpdatePlayerPayload {
 export interface StartGamePayload {
   gameId: string;
   playerId: string;
+}
+
+declare global {
+  interface HTMLElementEventMap {
+    updatePlayer: CustomEvent<UpdatePlayerPayload>;
+    startGame: CustomEvent<StartGamePayload>;
+  }
 }

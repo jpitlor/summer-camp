@@ -21,6 +21,10 @@ export class AppRouter extends StyledElement {
     this.route = event.detail;
   }
 
+  navigate(route: string) {
+    this.route = route;
+  }
+
   render() {
     return html`<slot></slot>`;
   }
