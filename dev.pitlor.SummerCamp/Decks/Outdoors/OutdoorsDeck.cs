@@ -2,7 +2,10 @@ using dev.pitlor.SummerCamp.Models;
 
 namespace dev.pitlor.SummerCamp.Decks.Outdoors;
 
-public record OutdoorsDeck() : Deck(DeckName.Outdoors, new NatureWalk(), 
+public record OutdoorsDeck() : Deck(
+    DeckName.Outdoors,
+    new NatureWalk(), 
+    [new Badge("", 12), new Badge("", 10), new Badge("", 8), new Badge("", 6)],
     DeckFactory.OfCards(
         new Tuple<int, Card>(4, new Flashlight()),
         new Tuple<int, Card>(2, new PocketKnife()),

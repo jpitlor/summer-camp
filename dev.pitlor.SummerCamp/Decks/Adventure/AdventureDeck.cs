@@ -2,7 +2,10 @@ using dev.pitlor.SummerCamp.Models;
 
 namespace dev.pitlor.SummerCamp.Decks.Adventure;
 
-public record AdventureDeck() : Deck(DeckName.Adventure, new TireSwing(),
+public record AdventureDeck() : Deck(
+    DeckName.Adventure, 
+    new TireSwing(),
+    [new Badge("", 12), new Badge("", 10), new Badge("", 8), new Badge("", 6)],
     DeckFactory.OfCards(
         new Tuple<int, Card>(3, new ZipLining()), 
         new Tuple<int, Card>(3, new RopesCourse()),

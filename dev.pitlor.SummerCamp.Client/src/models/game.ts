@@ -14,4 +14,5 @@ export interface Game {
   players: Record<string, Player>;
   boardTiles: BoardTile[];
   adminPlayerId: string;
+  isStarted: boolean;
 }

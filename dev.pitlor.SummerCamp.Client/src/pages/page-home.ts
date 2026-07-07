@@ -1,15 +1,45 @@
-import { html } from "lit";
+import { html, type PropertyValues } from "lit";
 import { customElement, query } from "lit/decorators.js";
+import { consume } from "@lit/context";
 import { StyledElement } from "../StyledElement.ts";
-import type { SignalrGamesClient } from "../elements/singalr-games-client.ts";
+import { type SignalrGamesClient } from "../elements/singalr-games-client.ts";
 import type { CreateGamePayload } from "../components/component-home-create-game.ts";
-import type { AppRouter } from "../elements/app-router.ts";
+import { type AppRouter } from "../elements/app-router.ts";
+import { gameContext } from "../elements/game-state-provider.ts";
+import type { Game } from "../models/game.ts";
 
 @customElement("page-home")
 export class PageHome extends StyledElement {
   @query("signalr-games-client") signalrGamesClient!: SignalrGamesClient;
 
   @query("app-router") appRouter!: AppRouter;
+
+  @consume({ context: gameContext, subscribe: true })
+  game!: Game | undefined;
+
+  protected async firstUpdated(changedProperties: PropertyValues) {
+    super.firstUpdated(changedProperties);
+
+    const playerId = localStorage.getItem("playerId")!;
+    const existingGameId = await this.signalrGamesClient.tryReconnect(playerId);
+    if (existingGameId) {
+      localStorage.setItem("gameId", existingGameId);
+    }
+  }
+
+  protected updated(changedProperties: PropertyValues) {
+    super.updated(changedProperties);
+    if (!this.game) {
+      return;
+    }
+
+    if (this.game.isStarted) {
+      this.dispatchEvent(new CustomEvent("redirectToGame"));
+      return;
+    }
+
+    this.appRouter.navigate("/wait");
+  }
 
   handleCreateGame = (e: CustomEvent<CreateGamePayload>) => {
     this.signalrGamesClient.createGame(e.detail);
@@ -46,5 +76,11 @@ export class PageHome extends StyledElement {
         </div>
       </div>
     `;
+  }
+}
+
+declare global {
+  interface HTMLElementEventMap {
+    redirectToGame: CustomEvent<void>;
   }
 }

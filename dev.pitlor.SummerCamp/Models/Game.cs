@@ -10,4 +10,5 @@ public record struct Game(
     List<Color> ColorOrder,
     Dictionary<string, Player> Players,
     List<BoardTile> BoardTiles,
-    string AdminPlayerId);
+    string AdminPlayerId,
+    bool IsStarted);

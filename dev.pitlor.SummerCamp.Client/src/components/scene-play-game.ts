@@ -1,48 +1,72 @@
 import { Scene } from "phaser";
+import uniqBy from "lodash.uniqby";
+import type { Game } from "../models/game.ts";
+
+const colors = ["red", "green", "purple", "yellow"];
 
 export class PlayGame extends Scene {
+  _game: Game;
+
+  constructor(game: Game) {
+    super();
+    this._game = game;
+  }
+
   preload() {
     this.load.setPath("/");
-    this.load.image("blue-meaple", "blue-meaple.png");
-    this.load.image("red-meaple", "red-meaple.png");
-    this.load.image("purple-meaple", "purple-meaple.png");
-    this.load.image("yellow-meaple", "yellow-meaple.png");
-    this.load.spritesheet("board", "board.png", {
-      frameWidth: 236,
-      frameHeight: 225,
-    });
-    this.load.spritesheet("player-board", "player-boards.png", {
-      frameWidth: 600,
-      frameHeight: 241,
-    });
-  }
 
-  create() {
-    const tile = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-    for (let i = 0; i < 9; i++) {
-      const tileIndex = Math.floor(Math.random() * tile.length);
-      const [t] = tile.splice(tileIndex, 1);
-      this.add.image(
-        200 + 236 * (i % 3),
-        200 + 225 * Math.floor(i / 3),
-        "board",
-        t,
-      );
+    this.load.image("card-back", "card-back.jpg");
+    this.load.image("snack-bar", "snack-bar.png");
+    this.load.image("starting-camper", "starting-camper.png");
+
+    for (const color of colors) {
+      this.load.image(`board-${color}`, `player-boards/${color}.jpg`);
+      this.load.image(`meaple-${color}`, `meaple/${color}.png`);
     }
 
-    for (let i = 0; i < 3; i++) {
-      const m1 = this.add.image(110, 140 + 225 * i, "blue-meaple");
-      const m2 = this.add.image(110, 165 + 225 * i, "red-meaple");
-      const m3 = this.add.image(110, 190 + 225 * i, "purple-meaple");
-      const m4 = this.add.image(110, 215 + 225 * i, "yellow-meaple");
-      this.add.group([m1, m2, m3, m4], { name: `track${i}` });
+    this.load.image("board-top", `board/top.jpg`);
+    for (let i = 0; i < 10; i++) {
+      this.load.image(`board-${i}`, `board/${i}.jpg`);
     }
 
-    this.add.sprite(
-      window.innerWidth / 2 - 300,
-      window.innerHeight - 450,
-      "player-board",
-      Math.floor(Math.random() * 4),
-    );
+    for (const deck of [this._game.deck1, this._game.deck2, this._game.deck3]) {
+      if (deck.name.isCustom) {
+        this.load.image(
+          `${deck.name.deckName}-${deck.move1Card.name}`,
+          deck.move1Card.base64Image,
+        );
+        for (const card of uniqBy(deck.storeCards, "name")) {
+          this.load.image(
+            `${deck.name.deckName}-${card.name}`,
+            card.base64Image,
+          );
+        }
+        for (const badge of deck.badges) {
+          this.load.image(
+            `${deck.name.deckName}-badge-${badge.points}`,
+            badge.base64Image,
+          );
+        }
+      } else {
+        this.load.image(
+          `${deck.name.deckName}-${deck.move1Card.name}`,
+          `decks/${deck.name.deckName}/${deck.move1Card.name}.jpg`,
+        );
+        for (const card of uniqBy(deck.storeCards, "name")) {
+          this.load.image(
+            `${deck.name.deckName}-${card.name}`,
+            `decks/${deck.name.deckName}/${card.name}.jpg`,
+          );
+        }
+        for (const i of [12, 10, 8, 6]) {
+          this.load.image(
+            `${deck.name.deckName}-badge-${i}`,
+            `decks/${deck.name.deckName}/badge-${i}.png`,
+          );
+        }
+      }
+    }
   }
+
+  create() {}
 }

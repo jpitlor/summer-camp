@@ -1,4 +1,5 @@
 ﻿using dev.pitlor.SummerCamp.Decks;
+using dev.pitlor.SummerCamp.Decks.Core;
 using dev.pitlor.SummerCamp.Models;
 using Path = dev.pitlor.SummerCamp.Models.Path;
 
@@ -97,7 +98,8 @@ public class GamesService
                 }
             },
             [],
-            playerId);
+            playerId,
+            false);
         if (!_games.TryAdd(gameId, game))
         {
             throw new ArgumentException("Game with id already exists", nameof(gameId));
@@ -218,6 +220,20 @@ public class GamesService
 
         // Set board tiles
         game.BoardTiles = _boardTiles.Shuffle().ToList();
+        
+        // Deal out cards
+        foreach (var player in game.Players)
+        {
+            player.Value.DrawPile.AddRange(DeckFactory.OfCards([
+                new Tuple<int, Card>(7, new LightsOut()),
+                new Tuple<int, Card>(1, game.Deck1.Move1Card),
+                new Tuple<int, Card>(1, game.Deck2.Move1Card),
+                new Tuple<int, Card>(1, game.Deck3.Move1Card)
+            ]));
+        }
+
+        // Set IsStarted
+        game.IsStarted = true;
 
         OnGameUpdated?.Invoke(this, _games[gameId]);
         return Result.Success();

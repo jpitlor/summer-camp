@@ -1,5 +1,4 @@
 export interface Badge {
-  image: string;
-  description: string;
+  base64Image: string;
   points: number;
 }

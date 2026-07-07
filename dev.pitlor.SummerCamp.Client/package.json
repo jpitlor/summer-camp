@@ -13,12 +13,14 @@
     "@microsoft/signalr": "^10.0.0",
     "@tailwindcss/vite": "^4.3.1",
     "lit": "^3.3.2",
+    "lodash.uniqby": "^4.7.0",
     "phaser": "^4.2.0",
     "tailwindcss": "^4.3.1",
     "unique-names-generator": "^4.7.1",
     "uuid": "^14.0.1"
   },
   "devDependencies": {
+    "@types/lodash.uniqby": "^4.7.9",
     "prettier": "^3.8.4",
     "typescript": "~6.0.2",
     "vite": "^8.0.12"

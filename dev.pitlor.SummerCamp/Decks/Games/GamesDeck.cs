@@ -5,6 +5,7 @@ namespace dev.pitlor.SummerCamp.Decks.Games;
 public record GamesDeck() : Deck(
     DeckName.Games,
     new Tetherball(),
+    [new Badge("", 12), new Badge("", 10), new Badge("", 8), new Badge("", 6)],
     DeckFactory.OfCards(
         new Tuple<int, Card>(4, new Tag()),
         new Tuple<int, Card>(3, new CaptureTheFlag()),

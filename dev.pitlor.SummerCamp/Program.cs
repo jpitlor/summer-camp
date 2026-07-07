@@ -9,8 +9,10 @@ builder.Services
     {
         options.PayloadSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
-builder.Services.AddTransient<GamesService>();
-builder.Services.AddTransient<PlayService>();
+builder.Services.AddSingleton<GamesService>();
+builder.Services.AddSingleton<PlayService>();
+builder.Services.AddHostedService<EventsService>();
+builder.Services.AddHostedService<TasksService>();
 builder.Services.AddControllers();
 
 var app = builder.Build();
