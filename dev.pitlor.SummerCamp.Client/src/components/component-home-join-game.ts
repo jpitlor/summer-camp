@@ -1,11 +1,24 @@
 import { StyledElement } from "../StyledElement.ts";
-import { customElement } from "lit/decorators.js";
+import { customElement, query } from "lit/decorators.js";
 import { html } from "lit";
 
 @customElement("component-home-join-game")
 export class ComponentHomeJoinGame extends StyledElement {
+  @query("[name=game-code]") gameCode!: HTMLInputElement;
+
   joinGame = (e: Event) => {
     e.preventDefault();
+    const payload = {
+      playerId: localStorage.getItem("playerId"),
+      gameId: this.gameCode.value,
+    } as JoinGamePayload;
+    this.dispatchEvent(
+      new CustomEvent("joinGame", {
+        detail: payload,
+        composed: true,
+        bubbles: true,
+      }),
+    );
     return false;
   };
 
@@ -39,4 +52,10 @@ export class ComponentHomeJoinGame extends StyledElement {
 export interface JoinGamePayload {
   gameId: string;
   playerId: string;
+}
+
+declare global {
+  interface HTMLElementEventMap {
+    joinGame: CustomEvent<JoinGamePayload>;
+  }
 }

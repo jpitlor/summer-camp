@@ -166,7 +166,7 @@ public class GamesService
         OnGameUpdated?.Invoke(this, _games[gameId]);
     }
 
-    public void UpdatePlayer(string gameId, string playerId, string name, Color color)
+    public void UpdatePlayer(string gameId, string playerId, string name, Color? color)
     {
         if (!_games.TryGetValue(gameId, out var game))
         {
@@ -224,17 +224,17 @@ public class GamesService
         // Deal out cards
         foreach (var player in game.Players)
         {
-            player.Value.DrawPile.AddRange(DeckFactory.OfCards([
+            player.Value.DrawPile.AddRange(DeckFactory.OfCards(
                 new Tuple<int, Card>(7, new LightsOut()),
                 new Tuple<int, Card>(1, game.Deck1.Move1Card),
-                new Tuple<int, Card>(1, game.Deck2.Move1Card),
-                new Tuple<int, Card>(1, game.Deck3.Move1Card)
-            ]));
+                new Tuple<int, Card>(1, game.Deck2.Move1Card), 
+                new Tuple<int, Card>(1, game.Deck3.Move1Card)));
         }
 
         // Set IsStarted
         game.IsStarted = true;
 
+        _games[gameId] = game;
         OnGameUpdated?.Invoke(this, _games[gameId]);
         return Result.Success();
     }

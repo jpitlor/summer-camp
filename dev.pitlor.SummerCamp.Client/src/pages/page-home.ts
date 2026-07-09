@@ -7,6 +7,11 @@ import type { CreateGamePayload } from "../components/component-home-create-game
 import { type AppRouter } from "../elements/app-router.ts";
 import { gameContext } from "../elements/game-state-provider.ts";
 import type { Game } from "../models/game.ts";
+import type {
+  StartGamePayload,
+  UpdatePlayerPayload,
+} from "../components/component-home-wait-to-start.ts";
+import type { JoinGamePayload } from "../components/component-home-join-game.ts";
 
 @customElement("page-home")
 export class PageHome extends StyledElement {
@@ -41,9 +46,21 @@ export class PageHome extends StyledElement {
     this.appRouter.navigate("/wait");
   }
 
-  handleCreateGame = (e: CustomEvent<CreateGamePayload>) => {
-    this.signalrGamesClient.createGame(e.detail);
+  handleCreateGame = async (e: CustomEvent<CreateGamePayload>) => {
+    await this.signalrGamesClient.createGame(e.detail);
     this.appRouter.navigate("/wait");
+  };
+
+  handleUpdatePlayer = async (e: CustomEvent<UpdatePlayerPayload>) => {
+    await this.signalrGamesClient.updatePlayer(e.detail);
+  };
+
+  handleJoinGame = async (e: CustomEvent<JoinGamePayload>) => {
+    await this.signalrGamesClient.joinGame(e.detail);
+  };
+
+  handleStartGame = async (e: CustomEvent<StartGamePayload>) => {
+    await this.signalrGamesClient.startGame(e.detail);
   };
 
   render() {
@@ -65,10 +82,15 @@ export class PageHome extends StyledElement {
                 ></component-home-create-game>
               </app-route>
               <app-route route="/join">
-                <component-home-join-game></component-home-join-game>
+                <component-home-join-game
+                  @joinGame=${this.handleJoinGame}
+                ></component-home-join-game>
               </app-route>
               <app-route route="/wait">
-                <component-home-wait-to-start></component-home-wait-to-start>
+                <component-home-wait-to-start
+                  @updatePlayer=${this.handleUpdatePlayer}
+                  @startGame=${this.handleStartGame}
+                ></component-home-wait-to-start>
               </app-route>
             </app-router>
             <signalr-games-client></signalr-games-client>

@@ -22,7 +22,7 @@ public class GamesHub(GamesService gamesService) : Hub
         gamesService.JoinGame(gameId, playerId, Context.ConnectionId);
     }
 
-    public void UpdatePlayer(string gameId, string playerId, string name, Color color)
+    public void UpdatePlayer(string gameId, string playerId, string name, Color? color)
     {
         gamesService.UpdatePlayer(gameId, playerId, name, color);
     }
