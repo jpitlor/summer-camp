@@ -1,4 +1,4 @@
-import { customElement, state } from "lit/decorators.js";
+import { customElement, property, state } from "lit/decorators.js";
 import { html, type PropertyValues } from "lit";
 import Phaser, { AUTO, Scale } from "phaser";
 import { StyledElement } from "../StyledElement.ts";
@@ -13,6 +13,7 @@ export class PagePlayGame extends StyledElement {
   game?: Phaser.Game;
 
   @consume({ context: gameContext, subscribe: true })
+  @property({ attribute: false })
   gameContext!: Game | undefined;
 
   connectedCallback() {
@@ -25,18 +26,19 @@ export class PagePlayGame extends StyledElement {
         mode: Scale.RESIZE,
         autoCenter: Scale.CENTER_BOTH,
       },
-      scene: [],
+      scene: [PlayGame],
     });
   }
 
-  protected update(changedProperties: PropertyValues) {
+  protected updated(changedProperties: PropertyValues) {
     super.update(changedProperties);
     if (!changedProperties.has("gameContext")) {
       return;
     }
 
-    if (!changedProperties.get("gameContext") && !!this.gameContext) {
-      this.game?.scene.add("Game", new PlayGame(this.gameContext), true);
+    if (this.gameContext) {
+      const scene = this.game?.scene.getScene<PlayGame>("PlayGame");
+      scene?.setGame(this.gameContext);
     }
   }
 

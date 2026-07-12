@@ -12,6 +12,7 @@ import type {
   UpdatePlayerPayload,
 } from "../components/component-home-wait-to-start.ts";
 import type { JoinGamePayload } from "../components/component-home-join-game.ts";
+import { sleep } from "../util/sleep.ts";
 
 @customElement("page-home")
 export class PageHome extends StyledElement {
@@ -32,12 +33,13 @@ export class PageHome extends StyledElement {
     }
   }
 
-  protected updated(changedProperties: PropertyValues) {
+  protected async updated(changedProperties: PropertyValues) {
     super.updated(changedProperties);
     if (!this.game) {
       return;
     }
 
+    await sleep(300);
     if (this.game.isStarted) {
       this.dispatchEvent(new CustomEvent("redirectToGame"));
       return;

@@ -9,7 +9,6 @@ public class GamesService
 {
     private readonly Dictionary<string, Game> _games = new();
     private readonly Dictionary<string, Deck> _customDecks = new();
-    private readonly List<Color> _colors = [Color.Blue, Color.Purple, Color.Red, Color.Yellow];
 
     private readonly List<BoardTile> _boardTiles =
     [
@@ -201,22 +200,32 @@ public class GamesService
             return Result.Failure("Not all players have set a name or picked a color");
         }
 
-        // Set progress to 2 if there are four players
-        if (game.Players.Count == 4)
+        // Set progress to appropriate value for player count
+        var startingSpot = game.Players.Count switch
         {
-            foreach (var id in game.Players.Keys)
+            4 => 3,
+            2 => 1,
+            _ => 0
+        };
+        foreach (var id in game.Players.Keys)
+        {
+            game.Players[id] = game.Players[id] with
             {
-                game.Players[id] = game.Players[id] with
-                {
-                    Path1Progress = 2,
-                    Path2Progress = 2,
-                    Path3Progress = 2
-                };
-            }
+                Path1Progress = startingSpot,
+                Path2Progress = startingSpot,
+                Path3Progress = startingSpot
+            };
         }
+        
+        // Take out badges if needed
+        // TODO
 
         // Set color order
-        game.ColorOrder = _colors.Shuffle().ToList();
+        game.ColorOrder = game.Players.Values
+            .Select(p => p.Color)
+            .Cast<Color>()
+            .Shuffle()
+            .ToList();
 
         // Set board tiles
         game.BoardTiles = _boardTiles.Shuffle().ToList();
