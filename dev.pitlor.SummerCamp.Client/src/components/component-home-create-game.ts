@@ -50,7 +50,13 @@ export class ComponentHomeCreateGame extends StyledElement {
         isCustom: d == "Custom",
       })),
     } as CreateGamePayload;
-    localStorage.setItem("gameId", gameId);
+    dispatchEvent(
+      new CustomEvent("gameCodeUpdated", {
+        bubbles: true,
+        composed: true,
+        detail: gameId,
+      }),
+    );
     await sleep(200);
     this.dispatchEvent(new CustomEvent("createGame", { detail: payload }));
     return false;
@@ -93,5 +99,6 @@ export interface CreateGamePayload {
 declare global {
   interface HTMLElementEventMap {
     createGame: CustomEvent<CreateGamePayload>;
+    gameCodeUpdated: CustomEvent<string>;
   }
 }

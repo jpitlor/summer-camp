@@ -5,14 +5,16 @@ import { StyledElement } from "../StyledElement.ts";
 import { type SignalrGamesClient } from "../elements/singalr-games-client.ts";
 import type { CreateGamePayload } from "../components/component-home-create-game.ts";
 import { type AppRouter } from "../elements/app-router.ts";
-import { gameContext } from "../elements/game-state-provider.ts";
+import {
+  gameCodeContext,
+  gameContext,
+} from "../elements/game-state-provider.ts";
 import type { Game } from "../models/game.ts";
 import type {
   StartGamePayload,
   UpdatePlayerPayload,
 } from "../components/component-home-wait-to-start.ts";
 import type { JoinGamePayload } from "../components/component-home-join-game.ts";
-import { sleep } from "../util/sleep.ts";
 
 @customElement("page-home")
 export class PageHome extends StyledElement {
@@ -23,23 +25,31 @@ export class PageHome extends StyledElement {
   @consume({ context: gameContext, subscribe: true })
   game!: Game | undefined;
 
+  @consume({ context: gameCodeContext, subscribe: true })
+  gameCode!: string | undefined;
+
   protected async firstUpdated(changedProperties: PropertyValues) {
     super.firstUpdated(changedProperties);
 
     const playerId = localStorage.getItem("playerId")!;
     const existingGameId = await this.signalrGamesClient.tryReconnect(playerId);
     if (existingGameId) {
-      localStorage.setItem("gameId", existingGameId);
+      this.dispatchEvent(
+        new CustomEvent("gameCodeUpdated", {
+          bubbles: true,
+          composed: true,
+          detail: existingGameId,
+        }),
+      );
     }
   }
 
   protected async updated(changedProperties: PropertyValues) {
     super.updated(changedProperties);
-    if (!this.game) {
+    if (!this.game || !this.gameCode) {
       return;
     }
 
-    await sleep(300);
     if (this.game.isStarted) {
       this.dispatchEvent(new CustomEvent("redirectToGame"));
       return;

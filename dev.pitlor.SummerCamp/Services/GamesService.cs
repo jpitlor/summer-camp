@@ -63,6 +63,17 @@ public class GamesService
         ])
     ];
 
+    private readonly List<Badge> _participationBadges = [  
+        new("", 6),
+        new("", 4),
+        new("", 2)
+    ];
+    private readonly List<Badge> _allStarBadges = [
+        new("", 8),
+        new("", 6),
+        new("", 4)
+    ];
+
     public event EventHandler<Game>? OnGameUpdated;
 
     public void CreateGame(string gameId, Path path1, Path path2, Path path3, string playerId,
@@ -97,6 +108,8 @@ public class GamesService
                 }
             },
             [],
+            _participationBadges,
+            _allStarBadges,
             playerId,
             false);
         if (!_games.TryAdd(gameId, game))
@@ -217,8 +230,48 @@ public class GamesService
             };
         }
         
-        // Take out badges if needed
-        // TODO
+        // Take out deck badges if needed
+        game.Deck1.Badges.Sort((a, b) => a.Points.CompareTo(b.Points));
+        if (game.Players.Count < 4)
+        {
+            game.Deck1.Badges.RemoveAt(0);
+        }
+        if (game.Players.Count < 3)
+        {
+            game.Deck1.Badges.RemoveAt(1);
+        }
+        
+        game.Deck2.Badges.Sort((a, b) => a.Points.CompareTo(b.Points));
+        if (game.Players.Count < 4)
+        {
+            game.Deck2.Badges.RemoveAt(0);
+        }
+        if (game.Players.Count < 3)
+        {
+            game.Deck2.Badges.RemoveAt(1);
+        }
+        
+        game.Deck3.Badges.Sort((a, b) => a.Points.CompareTo(b.Points));
+        if (game.Players.Count < 4)
+        {
+            game.Deck3.Badges.RemoveAt(0);
+        }
+        if (game.Players.Count < 3)
+        {
+            game.Deck3.Badges.RemoveAt(1);
+        }
+        
+        // Take out participation/all star badges if needed
+        game.AllStarBadges.Sort((a, b) => a.Points.CompareTo(b.Points));
+        if (game.Players.Count < 3)
+        {
+            game.AllStarBadges.RemoveAt(1);
+        }
+        game.ParticipationBadges.Sort((a, b) => a.Points.CompareTo(b.Points));
+        if (game.Players.Count < 3)
+        {
+            game.ParticipationBadges.RemoveAt(1);
+        }
 
         // Set color order
         game.ColorOrder = game.Players.Values
@@ -238,6 +291,16 @@ public class GamesService
                 new Tuple<int, Card>(1, game.Deck1.Move1Card),
                 new Tuple<int, Card>(1, game.Deck2.Move1Card), 
                 new Tuple<int, Card>(1, game.Deck3.Move1Card)));
+        }
+        
+        // Deal starting hand
+        for (var i = 0; i < game.Players.Count; i++)
+        {
+            var color = game.ColorOrder[i];
+            var player = game.Players.First(p => p.Value.Color == color);
+            var cards = player.Value.DrawPile[..(3 + i)];
+            player.Value.Hand.AddRange(cards);
+            player.Value.DrawPile.RemoveRange(0, 3 + i);
         }
 
         // Set IsStarted

@@ -10,5 +10,7 @@ public record struct Game(
     List<Color> ColorOrder,
     Dictionary<string, Player> Players,
     List<BoardTile> BoardTiles,
+    List<Badge> ParticipationBadges,
+    List<Badge> AllStarBadges,
     string AdminPlayerId,
     bool IsStarted);

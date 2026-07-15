@@ -19,6 +19,13 @@ export class ComponentHomeJoinGame extends StyledElement {
         bubbles: true,
       }),
     );
+    this.dispatchEvent(
+      new CustomEvent("gameCodeUpdated", {
+        bubbles: true,
+        composed: true,
+        detail: this.gameCode.value,
+      }),
+    );
     return false;
   };
 
