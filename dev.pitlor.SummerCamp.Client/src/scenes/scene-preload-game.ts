@@ -56,7 +56,6 @@ export class PreloadGame extends Phaser.Scene {
           );
         }
         for (const i of [12, 10, 8, 6]) {
-          console.log(`${deckName}-badge-${i}`);
           this.load.image(
             `${deckName}-badge-${i}`,
             `decks/${deckName}/badge-${i}.png`,

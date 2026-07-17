@@ -217,7 +217,7 @@ public class GamesService
         var startingSpot = game.Players.Count switch
         {
             4 => 3,
-            2 => 1,
+            3 => 1,
             _ => 0
         };
         foreach (var id in game.Players.Keys)
@@ -286,11 +286,14 @@ public class GamesService
         // Deal out cards
         foreach (var player in game.Players)
         {
-            player.Value.DrawPile.AddRange(DeckFactory.OfCards(
-                new Tuple<int, Card>(7, new LightsOut()),
-                new Tuple<int, Card>(1, game.Deck1.Move1Card),
-                new Tuple<int, Card>(1, game.Deck2.Move1Card), 
-                new Tuple<int, Card>(1, game.Deck3.Move1Card)));
+            var deck = DeckFactory
+                .OfCards(
+                    new Tuple<int, Card>(7, new LightsOut()),
+                    new Tuple<int, Card>(1, game.Deck1.Move1Card),
+                    new Tuple<int, Card>(1, game.Deck2.Move1Card), 
+                    new Tuple<int, Card>(1, game.Deck3.Move1Card))
+                .Shuffle();
+            player.Value.DrawPile.AddRange(deck);
         }
         
         // Deal starting hand
