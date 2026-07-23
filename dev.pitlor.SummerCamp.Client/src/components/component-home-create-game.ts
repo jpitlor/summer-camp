@@ -12,7 +12,6 @@ import {
   uniqueNamesGenerator,
 } from "unique-names-generator";
 import type { DeckName } from "../models/deck-name.ts";
-import { sleep } from "../util/sleep.ts";
 
 @customElement("component-home-create-game")
 export class ComponentHomeCreateGame extends StyledElement {
@@ -57,7 +56,6 @@ export class ComponentHomeCreateGame extends StyledElement {
         detail: gameId,
       }),
     );
-    await sleep(200);
     this.dispatchEvent(new CustomEvent("createGame", { detail: payload }));
     return false;
   };

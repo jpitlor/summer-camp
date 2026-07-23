@@ -1,18 +1,21 @@
 using dev.pitlor.SummerCamp.Models;
+using Path = dev.pitlor.SummerCamp.Models.Path;
 
 namespace dev.pitlor.SummerCamp.Decks.Custom;
 
 public record CustomCard(
     string Name,
     string Description,
+    Path DeckName,
     string Base64Image,
     int Cost,
     int Points,
-    List<CustomCardAction> Actions) : Card(Name, Description, Base64Image, Cost, Points)
+    List<CustomCardAction> Actions) : Card(Name, Description, DeckName, Base64Image, Cost, Points)
 {
-    public static CustomCard Create(CustomCardConfig config, Func<string, string> imageReader) => new(
+    public static CustomCard Create(CustomCardConfig config, Path deckName, Func<string, string> imageReader) => new(
         config.Name,
         config.Description, 
+        deckName,
         imageReader(config.ImagePath),
         config.Cost, 
         config.Points,

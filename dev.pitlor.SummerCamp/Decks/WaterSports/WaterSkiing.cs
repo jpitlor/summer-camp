@@ -4,7 +4,7 @@ using Path = dev.pitlor.SummerCamp.Models.Path;
 namespace dev.pitlor.SummerCamp.Decks.WaterSports;
 
 public record WaterSkiing()
-    : Card("Water skiing", "Move 1 space on the path you have progressed the most on", "", 3, 1)
+    : Card("Water skiing", "Move 1 space on the path you have progressed the most on", Path.WaterSports, 3, 1)
 {
     public override void Play(IGameEffects gameEffects, Game game, Player player)
     {

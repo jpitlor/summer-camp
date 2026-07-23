@@ -3,10 +3,10 @@ using Path = dev.pitlor.SummerCamp.Models.Path;
 
 namespace dev.pitlor.SummerCamp.Decks.ArtsAndCrafts;
 
-public record Ceramics() : Card("Ceramics", "Move your pawn forward 2 spaces on the arts & crafts path", "", 5, 1)
+public record Ceramics() : Card("Ceramics", "Move your pawn forward 2 spaces on the arts & crafts path", Path.ArtsAndCrafts, 5, 1)
 {
     public override void Play(IGameEffects gameEffects, Game game, Player player)
     {
-        gameEffects.MoveOnTrack(ChoiceOrValue<Path>.Value(Path.Deck(DeckName.ArtsAndCrafts)), 2);
+        gameEffects.MoveOnTrack(ChoiceOrValue<Path>.Value(Path.ArtsAndCrafts), 2);
     }
 }

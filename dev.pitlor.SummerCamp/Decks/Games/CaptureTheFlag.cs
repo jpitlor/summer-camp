@@ -4,7 +4,7 @@ using Path = dev.pitlor.SummerCamp.Models.Path;
 namespace dev.pitlor.SummerCamp.Decks.Games;
 
 public record CaptureTheFlag() : Card("Capture the flag",
-    "Move 1 space in any path. If you land on a space with the player to your right, gain 2 snackbars.", "", 5, 2)
+    "Move 1 space in any path. If you land on a space with the player to your right, gain 2 snackbars.", Path.Games, 5, 2)
 {
     public override void Play(IGameEffects gameEffects, Game game, Player player)
     {

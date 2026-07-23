@@ -13,6 +13,7 @@ export class AppRoute extends StyledElement {
   element!: LitElement;
 
   @consume({ context: routeContext, subscribe: true })
+  @property({ attribute: false })
   currentRoute!: string;
 
   render() {

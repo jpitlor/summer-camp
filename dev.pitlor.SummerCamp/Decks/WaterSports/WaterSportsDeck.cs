@@ -1,9 +1,10 @@
 using dev.pitlor.SummerCamp.Models;
+using Path = dev.pitlor.SummerCamp.Models.Path;
 
 namespace dev.pitlor.SummerCamp.Decks.WaterSports;
 
 public record WaterSportsDeck() : Deck(
-    DeckName.WaterSports,
+    Path.WaterSports,
     new WaterSafety(),
     [new Badge("", 12), new Badge("", 10), new Badge("", 8), new Badge("", 6)],
     DeckFactory

@@ -37,7 +37,6 @@ export const layoutScene = (scene: PlayGame) => () => {
         | "path1Progress"
         | "path2Progress"
         | "path3Progress";
-      console.log(scene._meaples, color);
       scene._meaples[color][j].setX(
         scene.scale.gameSize.width / 4 - 237 + player[key] * SPACE_WIDTH,
       );

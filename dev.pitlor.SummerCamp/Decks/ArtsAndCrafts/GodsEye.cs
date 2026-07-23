@@ -4,7 +4,7 @@ using Path = dev.pitlor.SummerCamp.Models.Path;
 namespace dev.pitlor.SummerCamp.Decks.ArtsAndCrafts;
 
 public record GodsEye() : Card("God's eye",
-    "Discard 2 snack bar tokens and then move 1 space on any path. You may do this 3 times.", "", 4, 1)
+    "Discard 2 snack bar tokens and then move 1 space on any path. You may do this 3 times.", Path.ArtsAndCrafts, 4, 1)
 {
     public override void Play(IGameEffects gameEffects, Game game, Player player)
     {

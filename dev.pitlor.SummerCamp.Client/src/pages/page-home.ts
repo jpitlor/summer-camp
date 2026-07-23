@@ -1,5 +1,5 @@
 import { html, type PropertyValues } from "lit";
-import { customElement, query } from "lit/decorators.js";
+import { customElement, property, query } from "lit/decorators.js";
 import { consume } from "@lit/context";
 import { StyledElement } from "../StyledElement.ts";
 import { type SignalrGamesClient } from "../elements/singalr-games-client.ts";
@@ -23,9 +23,11 @@ export class PageHome extends StyledElement {
   @query("app-router") appRouter!: AppRouter;
 
   @consume({ context: gameContext, subscribe: true })
+  @property({ attribute: false })
   game!: Game | undefined;
 
   @consume({ context: gameCodeContext, subscribe: true })
+  @property({ attribute: false })
   gameCode!: string | undefined;
 
   protected async firstUpdated(changedProperties: PropertyValues) {

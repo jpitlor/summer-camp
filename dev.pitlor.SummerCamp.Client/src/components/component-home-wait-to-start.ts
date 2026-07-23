@@ -1,5 +1,5 @@
 import { StyledElement } from "../StyledElement.ts";
-import { customElement, query, queryAll } from "lit/decorators.js";
+import { customElement, property, query, queryAll } from "lit/decorators.js";
 import { html } from "lit";
 import { map } from "lit/directives/map.js";
 import type { Color } from "../models/color.ts";
@@ -37,9 +37,11 @@ export class ComponentHomeWaitToStart extends StyledElement {
   @queryAll("[name=color") colorInputs!: NodeListOf<HTMLInputElement>;
 
   @consume({ context: gameContext, subscribe: true })
+  @property({ attribute: false })
   game!: Game | undefined;
 
   @consume({ context: gameCodeContext, subscribe: true })
+  @property({ attribute: false })
   gameCode!: string | undefined;
 
   startGame = (e: Event) => {

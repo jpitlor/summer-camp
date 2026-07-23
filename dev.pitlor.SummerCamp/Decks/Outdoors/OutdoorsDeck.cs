@@ -1,9 +1,10 @@
 using dev.pitlor.SummerCamp.Models;
+using Path = dev.pitlor.SummerCamp.Models.Path;
 
 namespace dev.pitlor.SummerCamp.Decks.Outdoors;
 
 public record OutdoorsDeck() : Deck(
-    DeckName.Outdoors,
+    Path.Outdoors,
     new NatureWalk(), 
     [new Badge("", 12), new Badge("", 10), new Badge("", 8), new Badge("", 6)],
     DeckFactory

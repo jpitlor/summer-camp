@@ -30,6 +30,7 @@ export class PlayGame extends Scene {
   _badges: Record<string, Image[]> = {};
   _decks: Record<string, Image[]> = {};
   _mat?: Image;
+  _hand: Image[] = [];
   _statusElements: (Image | Phaser.GameObjects.Text | Rectangle)[] = [];
 
   _focused?: GameObject;
@@ -85,6 +86,12 @@ export class PlayGame extends Scene {
     for (const _ of me.drawPile) {
       const image = this.add.image(9999, 0, "card-back").setScale(0.085);
       this._decks["drawPile"].push(image);
+    }
+
+    // Add hand
+    for (const card of me.hand) {
+      const image = this.add.image(9999, 0, `${card.deckName}-${card.name}`);
+      this._hand.push(image);
     }
 
     // Add path badges

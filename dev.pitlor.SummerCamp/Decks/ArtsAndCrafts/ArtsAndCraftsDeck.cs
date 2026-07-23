@@ -1,9 +1,10 @@
 using dev.pitlor.SummerCamp.Models;
+using Path = dev.pitlor.SummerCamp.Models.Path;
 
 namespace dev.pitlor.SummerCamp.Decks.ArtsAndCrafts;
 
 public record ArtsAndCraftsDeck() : Deck(
-    DeckName.ArtsAndCrafts,
+    Path.ArtsAndCrafts,
     new Boondoggle(),
     [new Badge("", 12), new Badge("", 10), new Badge("", 8), new Badge("", 6)],
     DeckFactory

@@ -4,7 +4,7 @@ using Path = dev.pitlor.SummerCamp.Models.Path;
 namespace dev.pitlor.SummerCamp.Decks.Games;
 
 public record Tag() : Card("Tag",
-    "Move 1 space in any path. If you land on a space with the player to your right, draw 1 card.", "", 5, 1)
+    "Move 1 space in any path. If you land on a space with the player to your right, draw 1 card.", Path.Games, 5, 1)
 {
     public override void Play(IGameEffects gameEffects, Game game, Player player)
     {
