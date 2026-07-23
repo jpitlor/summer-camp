@@ -33,17 +33,18 @@ public class GamesController(GamesService gamesService) : ControllerBase
             return BadRequest("Malformed config.json");
         }
 
+        var pathName = Path.Custom(config.Name);
         var cardImageReader = ImageToBase64(zip, "cards");
         var badgeImageReader = ImageToBase64(zip, "badges");
         var storeCards = config.StoreCards
-            .Select(x => new Tuple<int, Card>(x.Count, CustomCard.Create(x.Card, cardImageReader)))
+            .Select(x => new Tuple<int, Card>(x.Count, CustomCard.Create(x.Card, pathName, cardImageReader)))
             .ToArray();
-        var move1Card = CustomCard.Create(config.Move1Card, cardImageReader);
+        var move1Card = CustomCard.Create(config.Move1Card, pathName, cardImageReader);
         var badges = config.Badges
             .Select(b => new Badge(badgeImageReader(b.ImagePath), b.Points))
             .ToList();
 
-        var deck = new Deck(Path.Custom(config.Name), move1Card, badges, DeckFactory.OfCards(storeCards));
+        var deck = new Deck(pathName, move1Card, badges, DeckFactory.OfCards(storeCards));
         gamesService.AddCustomDeck(config.Name, deck);
         
         return Ok();
