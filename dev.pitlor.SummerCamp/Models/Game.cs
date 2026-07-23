@@ -1,3 +1,5 @@
+using System.Collections.Immutable;
+
 namespace dev.pitlor.SummerCamp.Models;
 
 public record struct Game(
@@ -7,10 +9,11 @@ public record struct Game(
     int SmoresLeft,
     int ScavengerHuntLeft,
     int FreeTimeLeft,
-    List<Color> ColorOrder,
+    ImmutableList<string> PlayerOrder,
     Dictionary<string, Player> Players,
-    List<BoardTile> BoardTiles,
-    List<Badge> ParticipationBadges,
-    List<Badge> AllStarBadges,
+    ImmutableList<BoardTile> BoardTiles,
+    ImmutableList<Badge> ParticipationBadges,
+    ImmutableList<Badge> AllStarBadges,
     string AdminPlayerId,
-    bool IsStarted);
+    bool IsStarted,
+    string CurrentPlayerId);

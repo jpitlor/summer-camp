@@ -9,9 +9,9 @@ public record Tag() : Card("Tag",
     public override void Play(IGameEffects gameEffects, Game game, Player player)
     {
         var result = gameEffects.MoveOnTrack(ChoiceOrValue<Path>.Choice(), 1);
-        var mySpotInOrder = game.ColorOrder.IndexOf((Color)player.Color!);
-        var playerToRight = game.ColorOrder[(mySpotInOrder + 1) % game.ColorOrder.Count];
-        if (result.Players.Any(p => p.Color == playerToRight))
+        var mySpotInOrder = game.PlayerOrder.FindIndex(p => game.Players[p] == player);
+        var playerToRight = game.PlayerOrder[(mySpotInOrder + 1) % game.PlayerOrder.Count];
+        if (result.Players.Any(p => p == game.Players[playerToRight]))
         {
             gameEffects.DrawCards(DeckLocation.DrawPile, 1);
         }

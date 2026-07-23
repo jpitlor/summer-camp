@@ -1,4 +1,3 @@
-import type { Color } from "./color.ts";
 import type { Deck } from "./deck.ts";
 import type { BoardTile } from "./board-tile.ts";
 import type { Player } from "./player.ts";
@@ -10,7 +9,7 @@ export interface Game {
   smoresLeft: number;
   scavengerHuntLeft: number;
   freeTimeLeft: number;
-  colorOrder: Color[];
+  playerOrder: string[];
   players: Record<string, Player>;
   boardTiles: BoardTile[];
   adminPlayerId: string;

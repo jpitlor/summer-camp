@@ -1,6 +1,8 @@
-﻿using dev.pitlor.SummerCamp.Decks;
+﻿using System.Collections.Immutable;
+using dev.pitlor.SummerCamp.Decks;
 using dev.pitlor.SummerCamp.Decks.Core;
 using dev.pitlor.SummerCamp.Models;
+using dev.pitlor.SummerCamp.Utils;
 using Path = dev.pitlor.SummerCamp.Models.Path;
 
 namespace dev.pitlor.SummerCamp.Services;
@@ -63,12 +65,15 @@ public class GamesService
         ])
     ];
 
-    private readonly List<Badge> _participationBadges = [  
+    private readonly ImmutableList<Badge> _participationBadges =
+    [
         new("", 6),
         new("", 4),
         new("", 2)
     ];
-    private readonly List<Badge> _allStarBadges = [
+
+    private readonly ImmutableList<Badge> _allStarBadges =
+    [
         new("", 8),
         new("", 6),
         new("", 4)
@@ -104,6 +109,7 @@ public class GamesService
                         0,
                         0,
                         0,
+                        0,
                         [])
                 }
             },
@@ -111,7 +117,8 @@ public class GamesService
             _participationBadges,
             _allStarBadges,
             playerId,
-            false);
+            false,
+            "");
         if (!_games.TryAdd(gameId, game))
         {
             throw new ArgumentException("Game with id already exists", nameof(gameId));
@@ -172,6 +179,7 @@ public class GamesService
             0,
             0,
             0,
+            0,
             []);
         game.Players.Add(playerId, player);
 
@@ -229,60 +237,60 @@ public class GamesService
                 Path3Progress = startingSpot
             };
         }
-        
+
         // Take out deck badges if needed
         game.Deck1.Badges.Sort((a, b) => a.Points.CompareTo(b.Points));
         if (game.Players.Count < 4)
         {
             game.Deck1.Badges.RemoveAt(0);
         }
+
         if (game.Players.Count < 3)
         {
             game.Deck1.Badges.RemoveAt(1);
         }
-        
+
         game.Deck2.Badges.Sort((a, b) => a.Points.CompareTo(b.Points));
         if (game.Players.Count < 4)
         {
             game.Deck2.Badges.RemoveAt(0);
         }
+
         if (game.Players.Count < 3)
         {
             game.Deck2.Badges.RemoveAt(1);
         }
-        
+
         game.Deck3.Badges.Sort((a, b) => a.Points.CompareTo(b.Points));
         if (game.Players.Count < 4)
         {
             game.Deck3.Badges.RemoveAt(0);
         }
+
         if (game.Players.Count < 3)
         {
             game.Deck3.Badges.RemoveAt(1);
         }
-        
+
         // Take out participation/all star badges if needed
-        game.AllStarBadges.Sort((a, b) => a.Points.CompareTo(b.Points));
+        game.AllStarBadges = game.AllStarBadges.Sort((a, b) => a.Points.CompareTo(b.Points));
         if (game.Players.Count < 3)
         {
-            game.AllStarBadges.RemoveAt(1);
+            game.AllStarBadges = game.AllStarBadges.RemoveAt(1);
         }
-        game.ParticipationBadges.Sort((a, b) => a.Points.CompareTo(b.Points));
+
+        game.ParticipationBadges = game.ParticipationBadges.Sort((a, b) => a.Points.CompareTo(b.Points));
         if (game.Players.Count < 3)
         {
-            game.ParticipationBadges.RemoveAt(1);
+            game.ParticipationBadges = game.ParticipationBadges.RemoveAt(1);
         }
 
         // Set color order
-        game.ColorOrder = game.Players.Values
-            .Select(p => p.Color)
-            .Cast<Color>()
-            .Shuffle()
-            .ToList();
+        game.PlayerOrder = game.Players.Keys.Shuffle().ToImmutableList();
 
         // Set board tiles
-        game.BoardTiles = _boardTiles.Shuffle().ToList();
-        
+        game.BoardTiles = _boardTiles.Shuffle().ToImmutableList();
+
         // Deal out cards
         foreach (var player in game.Players)
         {
@@ -290,27 +298,53 @@ public class GamesService
                 .OfCards(
                     new Tuple<int, Card>(7, new LightsOut()),
                     new Tuple<int, Card>(1, game.Deck1.Move1Card),
-                    new Tuple<int, Card>(1, game.Deck2.Move1Card), 
+                    new Tuple<int, Card>(1, game.Deck2.Move1Card),
                     new Tuple<int, Card>(1, game.Deck3.Move1Card))
-                .Shuffle();
-            player.Value.DrawPile.AddRange(deck);
+                .Shuffle()
+                .ToImmutableList();
+            game.Players[player.Key] = player.Value with { DrawPile = deck };
         }
-        
+
         // Deal starting hand
         for (var i = 0; i < game.Players.Count; i++)
         {
-            var color = game.ColorOrder[i];
-            var player = game.Players.First(p => p.Value.Color == color);
-            var cards = player.Value.DrawPile[..(3 + i)];
-            player.Value.Hand.AddRange(cards);
-            player.Value.DrawPile.RemoveRange(0, 3 + i);
+            var id = game.PlayerOrder[i];
+            var player = game.Players[id];
+            game.Players[id] = player with
+            {
+                Hand = player.DrawPile.GetRange(0, 3 + i),
+                DrawPile = player.DrawPile.RemoveRange(0, 3 + i)
+            };
         }
 
         // Set IsStarted
         game.IsStarted = true;
+        game.CurrentPlayerId = game.PlayerOrder[0];
 
         _games[gameId] = game;
         OnGameUpdated?.Invoke(this, _games[gameId]);
         return Result.Success();
+    }
+
+    public Game GetGame(string gameCode)
+    {
+        return _games[gameCode];
+    }
+
+    public string? GetGameCode(string connectionId)
+    {
+        return _games.FirstOrDefault(g => g.Value.Players.Values.Any(p => p.ConnectionId == connectionId)).Key;
+    }
+
+    public void UpdateGame(string gameCode, Func<Game, Game> update)
+    {
+        _games[gameCode] = update.Invoke(_games[gameCode]);
+    }
+
+    public void UpdatePlayer(string gameCode, string playerId, Func<Player, GameEffects, Player> update)
+    {
+        var player = _games[gameCode].Players[playerId];
+        var gameEffects = new GameEffects(this, gameCode, playerId);
+        _games[gameCode].Players[playerId] = update.Invoke(player, gameEffects);
     }
 }
